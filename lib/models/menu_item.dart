@@ -5,6 +5,7 @@ class MenuItem {
   final double price;
   final String imagePath;
   final String description;
+  final String routName;
 
   const MenuItem({
     required this.id,
@@ -13,5 +14,6 @@ class MenuItem {
     required this.price,
     required this.imagePath,
     required this.description,
+    required this.routName,
   });
 }
