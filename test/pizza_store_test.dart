@@ -1,10 +1,14 @@
-import 'package:flutter/material.dart';
+import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:food_menu_app/main.dart';
 
+// Class untuk mengelakkan ralat carian HTTP/Assets dalam persekitaran CI
+class TestHttpOverrides extends HttpOverrides {}
+
 void main() {
-  // Elakkan ralat carian gambar asset semasa ujian widget persekitaran CI
-  TestWidgetsFlutterBinding.ensureInitialized();
+  setUpAll(() {
+    HttpOverrides.global = TestHttpOverrides();
+  });
 
   testWidgets('Test that the menu lists the three items', (WidgetTester tester) async {
     await tester.pumpWidget(const MenuApp());
@@ -17,7 +21,6 @@ void main() {
   testWidgets('Test that tapping a card opens its detail screen', (WidgetTester tester) async {
     await tester.pumpWidget(const MenuApp());
 
-    // Tekan pada kad Vegetable Pizza
     await tester.tap(find.text('Vegetable Pizza'));
     await tester.pumpAndSettle();
 
